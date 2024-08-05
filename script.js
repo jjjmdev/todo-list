@@ -1,10 +1,12 @@
+let projects;
+
 class Projects {
 	constructor(projects = []) {
 		this.projects = projects.map((project) => new Item(project));
 	}
 
 	addItem(item) {
-		this.projects.push(new Item(item));
+		this.projects.push(new Item(item, projects.projects.length));
 
 		saveToLocal();
 		return this.projects;
@@ -37,20 +39,16 @@ class Projects {
 }
 
 class Item {
-	constructor({ projectName, title, description, priority, notes }) {
+	constructor({ projectName, title, description, priority, notes }, index) {
 		this.projectName = projectName;
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
 		this.notes = notes;
-	}
-
-	hello() {
-		return;
+		this.id = index;
 	}
 }
 
-let projects;
 function init() {
 	if (!localStorage.getItem("todo")) {
 		projects = new Projects();
@@ -58,6 +56,7 @@ function init() {
 		projects = new Projects(JSON.parse(localStorage.getItem("todo")));
 	}
 
+	projects.projects.forEach((project, index) => (project.id = index));
 	console.log(projects);
 }
 
@@ -67,43 +66,11 @@ function saveToLocal() {
 
 init();
 
+projects.addItem({
+	projectName: "bagong Item",
+	title: "Hugas pinggan",
+	description: "Dalawang beses mong hugasan",
+	priority: 2,
+});
+
 export { projects };
-// localStorage.setItem(
-// 	"todo",
-// 	JSON.stringify([
-// 		{
-// 			projectName: "daily",
-// 			title: "Hugas pinggan",
-// 			description: "Dalawang beses mong hugasan",
-// 			priority: 3,
-// 			notes: "huy galingan mo ",
-// 		},
-
-// 		{
-// 			projectName: "weekly",
-// 			title: "Hugas pinggan",
-// 			description: "Dalawang beses mong hugasan",
-// 			priority: 2,
-// 			notes: "huy galingan mo ",
-// 		},
-
-// 		{
-// 			projectName: "luhluh",
-// 			title: "Hugas pinggan",
-// 			description: "Dalawang beses mong hugasan",
-// 			priority: 1,
-// 			notes: "huy galingan mo ",
-// 		},
-// 	])
-// );
-
-// projects.addItem(
-// 	{
-// 		projectName: "bagong Item",
-// 		title: "Hugas pinggan",
-// 		description: "Dalawang beses mong hugasan",
-// 		priority: 2,
-// 		notes: "huy galingan mo ",
-// 	},
-// 	1
-// );

@@ -1,9 +1,13 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
 
 .message-extras > * {
-	margin-left: 0.5rem;
+	margin-left: 0.8rem;
 }
 
 .message-title .tag {
 	margin-left: 0.5rem;
+}
+
+.message-body .tags {
+	margin-top: 0.5rem;
 }
