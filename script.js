@@ -1,84 +1,109 @@
 class Projects {
 	constructor(projects = []) {
-		this.projects = projects.map(({ name, list }) => new Project(name, list));
-	}
-
-	newProject(name) {
-		let p = new Project(name);
-		this.projects.push(p);
-		return p;
-	}
-
-	get listProjects() {
-		return this.projects;
-	}
-}
-
-class Project {
-	constructor(name, list = []) {
-		if (!name) {
-			return {};
-		}
-		this.name = name;
-		this.list = list.map(
-			({ title, description, priority }) =>
-				new Item(title, description, priority)
-		);
-	}
-
-	listDown() {
-		return this.list;
+		this.projects = projects.map((project) => new Item(project));
 	}
 
 	addItem(item) {
-		this.list = [...this.list, item];
-		return this.list;
+		this.projects.push(new Item(item));
+
+		saveToLocal();
+		return this.projects;
 	}
 
 	updateItem(item, index) {
-		this.list = [
-			...this.list.slice(0, index),
+		this.projects = [
+			...this.projects.slice(0, index),
 			item,
-			...this.list.slice(index + 1, this.list.length),
+			...this.projects.slice(index + 1, this.projects.length),
 		];
-		return this.list;
+
+		saveToLocal();
+		return this.projects;
 	}
 
-	deleteItem(index) {
-		this.list = [
-			...this.list.slice(0, index),
-			...this.list.slice(index + 1, this.list.length),
-		];
+	listByProjectName(projectName) {
+		return this.projects.filter(
+			(project) => project.projectName === projectName
+		);
+	}
+
+	listByPriority(priority) {
+		return this.projects.filter((project) => project.priority === priority);
+	}
+
+	sortByPriority() {
+		return this.projects.sort((a, b) => b.priority - a.priority);
 	}
 }
 
 class Item {
-	constructor(title, description, priority) {
+	constructor({ projectName, title, description, priority, notes }) {
+		this.projectName = projectName;
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
+		this.notes = notes;
+	}
+
+	hello() {
+		return;
 	}
 }
 
-// const projects = new Projects();
-// const daily = projects.newProject("daily");
-// projects.newProject("weeklys");
+let projects;
+function init() {
+	if (!localStorage.getItem("todo")) {
+		projects = new Projects();
+	} else {
+		projects = new Projects(JSON.parse(localStorage.getItem("todo")));
+	}
 
-// daily.addItem(new Item("gardening1", "tend to garden", "medium"));
-// daily.addItem(new Item("gardening2", "tend to garden", "medium"));
-// daily.addItem(new Item("gardening3", "tend to garden", "medium"));
+	console.log(projects);
+}
 
-// console.log(daily.listDown());
+function saveToLocal() {
+	localStorage.setItem("todo", JSON.stringify(projects.projects));
+}
 
-// daily.deleteItem(0);
+init();
 
-// console.log(daily.listDown());
-// console.log(projects.listDown());
+export { projects };
+// localStorage.setItem(
+// 	"todo",
+// 	JSON.stringify([
+// 		{
+// 			projectName: "daily",
+// 			title: "Hugas pinggan",
+// 			description: "Dalawang beses mong hugasan",
+// 			priority: 3,
+// 			notes: "huy galingan mo ",
+// 		},
 
-// const jsonString = JSON.stringify(projects.listDown());
-// console.log(jsonString);
+// 		{
+// 			projectName: "weekly",
+// 			title: "Hugas pinggan",
+// 			description: "Dalawang beses mong hugasan",
+// 			priority: 2,
+// 			notes: "huy galingan mo ",
+// 		},
 
-// localStorage.setItem("todo", jsonString);
-let itemFromLocalStorage = localStorage.getItem("todo");
-itemFromLocalStorage = new Projects(JSON.parse(itemFromLocalStorage));
-console.log(itemFromLocalStorage.listProjects);
+// 		{
+// 			projectName: "luhluh",
+// 			title: "Hugas pinggan",
+// 			description: "Dalawang beses mong hugasan",
+// 			priority: 1,
+// 			notes: "huy galingan mo ",
+// 		},
+// 	])
+// );
+
+// projects.addItem(
+// 	{
+// 		projectName: "bagong Item",
+// 		title: "Hugas pinggan",
+// 		description: "Dalawang beses mong hugasan",
+// 		priority: 2,
+// 		notes: "huy galingan mo ",
+// 	},
+// 	1
+// );

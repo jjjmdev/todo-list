@@ -1,3 +1,9 @@
-body {
-	background-color: #303030;
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
+
+.message-extras > * {
+	margin-left: 0.5rem;
+}
+
+.message-title .tag {
+	margin-left: 0.5rem;
 }
