@@ -1,30 +1,6 @@
-import { projects as importedProjects } from "./script.js";
-import { toggleCompleted } from "./completed.js";
-const projects = importedProjects.projects;
-const container = document.querySelector(".container");
+import { buttonClick } from "./buttons.js";
 
-function renderNav(projectNames) {
-	const nav = document.createElement("div");
-	nav.classList = "tabs is-right";
-	const projectList = document.createElement("ul");
-
-	for (const projectName of projectNames) {
-		const projectItem = document.createElement("li");
-		projectItem.innerHTML = `<a>${projectName}</a>`;
-		projectList.appendChild(projectItem);
-	}
-
-	// add button
-	const addButton = document.createElement("li");
-	addButton.innerHTML = `<a>+</a>`;
-	projectList.appendChild(addButton);
-
-	nav.appendChild(projectList);
-
-	container.appendChild(nav);
-}
-
-function renderItems(selectedProject) {
+export function renderItems(projects, selectedProject) {
 	const items = projects.filter(
 		({ projectName }) => projectName === selectedProject
 	);
@@ -71,9 +47,7 @@ function renderItems(selectedProject) {
 		const messageExtras = document.createElement("span");
 		messageExtras.setAttribute("data-index", id);
 		messageExtras.classList = "message-extras";
-		messageExtras.addEventListener("click", (e) =>
-			console.log(e.currentTarget.dataset.index)
-		);
+		messageExtras.addEventListener("click", (e) => buttonClick(e));
 
 		const completedButton = document.createElement("button");
 		completedButton.classList = "fa-solid fa-check";
@@ -95,18 +69,5 @@ function renderItems(selectedProject) {
 		cards.appendChild(article);
 	});
 
-	container.appendChild(cards);
+	return cards;
 }
-
-function init() {
-	let projectNames = [];
-
-	projects.forEach(({ projectName }) => {
-		if (!projectNames.includes(projectName)) projectNames.push(projectName);
-	});
-
-	renderNav(projectNames);
-	renderItems(projectNames[3]);
-}
-
-init();
