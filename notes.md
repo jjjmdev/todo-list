@@ -19,5 +19,11 @@ Application logic is separate from DOM-related stuff
     Expand a single todo to see/edit its details.
     Delete a todo.
 Add a `date` using date-fns
+<!-- Needs ID -->
 Completed: Boolean, true or false
-Needs ID
+Pag completed, lower opacity
+
+Buttons:
+e.target.classlist determines kung ano tatawagin; should be on another function
+
+Pag hiwahiwalayin mga module 'coz crowded na teh
