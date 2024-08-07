@@ -2,7 +2,7 @@ let projects;
 
 class Projects {
 	constructor(projects = []) {
-		this.projects = projects.map((project) => new Item(project));
+		this.projects = projects.map((project, index) => new Item(project, index));
 	}
 
 	addItem(item) {
@@ -21,6 +21,14 @@ class Projects {
 
 		saveToLocal();
 		return this.projects;
+	}
+
+	deleteItem(index) {
+		index = parseInt(index);
+		this.projects = [
+			...this.projects.slice(0, index),
+			...this.projects.slice(index + 1, this.projects.length),
+		];
 	}
 
 	listByProjectName(projectName) {
@@ -56,21 +64,31 @@ function init() {
 		projects = new Projects(JSON.parse(localStorage.getItem("todo")));
 	}
 
-	projects.projects.forEach((project, index) => (project.id = index));
-	console.log(projects);
+	// projects.projects.forEach((project, index) => (project.id = index));
 }
 
 function saveToLocal() {
+	// projects.projects.forEach((project, index) => (project.id = index));
 	localStorage.setItem("todo", JSON.stringify(projects.projects));
+}
+
+function itemByIndex(index) {
+	return projects.projects.find((project) => project.id === parseInt(index));
+}
+
+function deleteItemByIndex(index) {
+	projects.deleteItem(index);
+	console.log(projects);
+	saveToLocal();
 }
 
 init();
 
-projects.addItem({
-	projectName: "bagong Item",
-	title: "Hugas pinggan",
-	description: "Dalawang beses mong hugasan",
-	priority: 2,
-});
+// projects.addItem({
+// 	projectName: "bagong Item",
+// 	title: "Hugas pinggan",
+// 	description: "Dalawang beses mong hugasan",
+// 	priority: 2,
+// });
 
-export { projects };
+export { projects, itemByIndex, deleteItemByIndex };
