@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+import { fillWithDummyContent } from "./fillWithDummyContent.js";
+
 let projects;
 
 class Projects {
@@ -47,28 +50,31 @@ class Projects {
 }
 
 class Item {
-	constructor({ projectName, title, description, priority, notes }, index) {
+	constructor(
+		{ projectName, title, description, priority, completed, date },
+		index
+	) {
 		this.projectName = projectName;
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
-		this.notes = notes;
+		this.completed = completed;
 		this.id = index;
+		this.date = format(new Date(date), "MM/dd/yyyy");
 	}
 }
 
 function init() {
-	if (!localStorage.getItem("todo")) {
-		projects = new Projects();
-	} else {
-		projects = new Projects(JSON.parse(localStorage.getItem("todo")));
-	}
+	// if (!localStorage.getItem("todo")) {
+	projects = new Projects(fillWithDummyContent());
+	localStorage.setItem("todo", JSON.stringify(projects.projects));
 
-	// projects.projects.forEach((project, index) => (project.id = index));
+	// } else {
+	// projects = new Projects(JSON.parse(localStorage.getItem("todo")));
+	// }
 }
 
 function saveToLocal() {
-	// projects.projects.forEach((project, index) => (project.id = index));
 	localStorage.setItem("todo", JSON.stringify(projects.projects));
 }
 
@@ -83,12 +89,5 @@ function deleteItemByIndex(index) {
 }
 
 init();
-
-// projects.addItem({
-// 	projectName: "bagong Item",
-// 	title: "Hugas pinggan",
-// 	description: "Dalawang beses mong hugasan",
-// 	priority: 2,
-// });
 
 export { projects, itemByIndex, deleteItemByIndex };

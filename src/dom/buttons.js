@@ -1,4 +1,4 @@
-import { itemByIndex, deleteItemByIndex } from "../app_logic/logic";
+import { itemByIndex, deleteItemByIndex } from "../app_logic/logic.js";
 import { renderDom } from "./renderDom.js";
 
 export function buttonClick(e) {

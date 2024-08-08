@@ -1,4 +1,5 @@
 import { buttonClick } from "./buttons.js";
+import { isPast } from "date-fns";
 
 export function renderItems(projects, selectedProject) {
 	const items = projects.filter(
@@ -7,9 +8,15 @@ export function renderItems(projects, selectedProject) {
 
 	const cards = document.createElement("div");
 
-	items.forEach(({ title, description, priority, id }) => {
+	items.forEach(({ title, description, priority, id, date, completed }) => {
 		const article = document.createElement("article");
 		article.classList = "message";
+
+		if (completed) {
+			article.classList += " is-success";
+		} else if (!completed && isPast(date)) {
+			article.classList += " is-danger";
+		}
 
 		const messageHeader = document.createElement("div");
 		messageHeader.classList = "message-header";
@@ -37,7 +44,7 @@ export function renderItems(projects, selectedProject) {
 		// Deadline
 		const deadlineSpan = document.createElement("span");
 		deadlineSpan.classList = "tag is-white";
-		deadlineSpan.textContent = "Deadline: 2024-03-20";
+		deadlineSpan.textContent = `Deadline: ${date}`;
 
 		const doneButton = document.createElement("button");
 		doneButton.classList = "fa-solid fa-check";

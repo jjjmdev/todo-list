@@ -9,7 +9,8 @@ Projects = [
 		projectName: "daily",
 		title: Hugas pinggan,
 		description: Dalawang beses mong hugasan,
-		date: Ngayong araw,
+		date: 2024-05-30,
+		status: completed, not completed, overdue // success, normal, danger
 		priority: 1, 2, 3,
 	},
 ]
@@ -19,11 +20,5 @@ Application logic is separate from DOM-related stuff
     Expand a single todo to see/edit its details.
     Delete a todo.
 Add a `date` using date-fns
-<!-- Needs ID -->
 Completed: Boolean, true or false
 Pag completed, lower opacity
-
-Buttons:
-e.target.classlist determines kung ano tatawagin; should be on another function
-
-Pag hiwahiwalayin mga module 'coz crowded na teh
