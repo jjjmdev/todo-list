@@ -1,20 +1,24 @@
 import { renderItems } from "./items.js";
+let activeProject;
 
 export function renderNav(projectNames) {
 	const nav = document.createElement("div");
 	nav.classList = "tabs is-right";
 	const projectList = document.createElement("ul");
-	let activeProject;
 
 	for (let [index, projectName] of projectNames.entries()) {
 		const projectItem = document.createElement("li");
 		projectItem.innerHTML = `<a>${projectName}</a>`;
 
-		if (index === 0) {
+		if (!activeProject) {
 			activeProject = projectName;
-			renderItems(activeProject);
+		}
+
+		if (activeProject === projectName) {
 			projectItem.classList += "is-active";
 		}
+
+		renderItems(activeProject);
 
 		projectItem.addEventListener("click", function () {
 			document

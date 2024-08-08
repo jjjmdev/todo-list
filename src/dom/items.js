@@ -18,6 +18,10 @@ export function renderItems(
 		article.classList = "message";
 
 		if (completed) {
+			article.classList.add("is-completed");
+		}
+
+		if (completed) {
 			article.classList += " is-success";
 		} else if (!completed && isPast(date)) {
 			article.classList += " is-danger";
@@ -46,13 +50,9 @@ export function renderItems(
 			prioritySpan.textContent = "Low";
 		}
 
-		// Deadline
 		const deadlineSpan = document.createElement("span");
 		deadlineSpan.classList = "tag is-white";
 		deadlineSpan.textContent = `Deadline: ${date}`;
-
-		const doneButton = document.createElement("button");
-		doneButton.classList = "fa-solid fa-check";
 
 		messageTitle.append(titleSpan, prioritySpan, deadlineSpan);
 
@@ -62,7 +62,12 @@ export function renderItems(
 		messageExtras.addEventListener("click", (e) => buttonClick(e));
 
 		const completedButton = document.createElement("button");
-		completedButton.classList = "fa-solid fa-check";
+
+		if (completed) {
+			completedButton.classList = "fa-solid fa-square-check";
+		} else {
+			completedButton.classList = "fa-regular fa-square-check";
+		}
 
 		const deleteButton = document.createElement("button");
 		deleteButton.classList = "fa-solid fa-trash";

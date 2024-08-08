@@ -11,3 +11,7 @@
 .message-body .tags {
 	margin-top: 0.5rem;
 }
+
+article.message.is-completed {
+	opacity: 0.6;
+}

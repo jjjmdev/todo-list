@@ -34,6 +34,11 @@ class Projects {
 		];
 	}
 
+	toggleCompleted(index) {
+		this.projects[index].completed = !this.projects[index].completed;
+		console.log(this.projects[index].completed);
+	}
+
 	listByProjectName(projectName) {
 		return this.projects.filter(
 			(project) => project.projectName === projectName
@@ -66,11 +71,11 @@ class Item {
 
 function init() {
 	// if (!localStorage.getItem("todo")) {
-	projects = new Projects(fillWithDummyContent());
-	localStorage.setItem("todo", JSON.stringify(projects.projects));
+	// projects = new Projects(fillWithDummyContent());
+	// localStorage.setItem("todo", JSON.stringify(projects.projects));
 
 	// } else {
-	// projects = new Projects(JSON.parse(localStorage.getItem("todo")));
+	projects = new Projects(JSON.parse(localStorage.getItem("todo")));
 	// }
 }
 
@@ -84,10 +89,15 @@ function itemByIndex(index) {
 
 function deleteItemByIndex(index) {
 	projects.deleteItem(index);
-	console.log(projects);
 	saveToLocal();
+}
+
+function toggleCompleted(index) {
+	projects.toggleCompleted(index);
+	saveToLocal();
+	console.log(projects);
 }
 
 init();
 
-export { projects, itemByIndex, deleteItemByIndex };
+export { projects, itemByIndex, deleteItemByIndex, toggleCompleted };

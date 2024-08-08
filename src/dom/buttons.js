@@ -1,4 +1,8 @@
-import { itemByIndex, deleteItemByIndex } from "../app_logic/logic.js";
+import {
+	itemByIndex,
+	deleteItemByIndex,
+	toggleCompleted,
+} from "../app_logic/logic.js";
 import { renderDom } from "./renderDom.js";
 
 export function buttonClick(e) {
@@ -7,7 +11,10 @@ export function buttonClick(e) {
 
 	if (classList === "fa-solid fa-trash") {
 		renderDeleteModal(index);
-	} else if (classList === "fa-solid fa-check") {
+	} else if (
+		classList === "fa-solid fa-square-check" ||
+		classList === "fa-regular fa-square-check"
+	) {
 		completeButton(index);
 	} else if (classList === "fa-regular fa-pen-to-square") {
 		editButton(index);
@@ -80,8 +87,9 @@ function renderDeleteModal(index) {
 }
 
 function completeButton(index) {
+	toggleCompleted(index);
+	renderDom();
 	console.log("Complete button has been toggled for index " + index);
-	// toggle complete, add class complete
 }
 
 function editButton(index) {
