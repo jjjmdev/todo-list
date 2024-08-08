@@ -1,12 +1,17 @@
 import { buttonClick } from "./buttons.js";
 import { isPast } from "date-fns";
+import { projects } from "../app_logic/logic.js";
 
-export function renderItems(projects, selectedProject) {
-	const items = projects.filter(
+const container = document.querySelector(".container");
+const cards = document.createElement("div");
+
+export function renderItems(
+	selectedProject = projects.projects[0].projectName
+) {
+	cards.innerHTML = "";
+	const items = projects.projects.filter(
 		({ projectName }) => projectName === selectedProject
 	);
-
-	const cards = document.createElement("div");
 
 	items.forEach(({ title, description, priority, id, date, completed }) => {
 		const article = document.createElement("article");
@@ -76,5 +81,5 @@ export function renderItems(projects, selectedProject) {
 		cards.appendChild(article);
 	});
 
-	return cards;
+	container.append(cards);
 }

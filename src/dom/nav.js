@@ -1,12 +1,32 @@
+import { renderItems } from "./items.js";
+
 export function renderNav(projectNames) {
 	const nav = document.createElement("div");
 	nav.classList = "tabs is-right";
 	const projectList = document.createElement("ul");
+	let activeProject;
 
-	for (const projectName of projectNames) {
+	for (let [index, projectName] of projectNames.entries()) {
 		const projectItem = document.createElement("li");
 		projectItem.innerHTML = `<a>${projectName}</a>`;
-		projectList.appendChild(projectItem);
+
+		if (index === 0) {
+			activeProject = projectName;
+			renderItems(activeProject);
+			projectItem.classList += "is-active";
+		}
+
+		projectItem.addEventListener("click", function () {
+			document
+				.querySelectorAll(".is-active")
+				.forEach((item) => item.classList.remove("is-active"));
+
+			projectItem.classList += "is-active";
+			activeProject = projectName;
+			renderItems(activeProject);
+		});
+
+		projectList.append(projectItem);
 	}
 
 	// add button
