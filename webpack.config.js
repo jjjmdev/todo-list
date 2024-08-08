@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const supportedLocales = ["en-US", "de", "pl", "it"];
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +25,7 @@ export default {
 			/^date-fns[/\\]locale$/,
 			new RegExp(`\\.[/\\\\](${supportedLocales.join("|")})[/\\\\]index\\.js$`)
 		),
+		new BundleAnalyzerPlugin(),
 	],
 
 	mode: "development",

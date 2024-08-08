@@ -4,6 +4,7 @@ import {
 	toggleCompleted,
 } from "../app_logic/logic.js";
 import { renderDom } from "./renderDom.js";
+import { renderEditModal } from "./editModal.js";
 
 export function buttonClick(e) {
 	const classList = e.target.classList.value;
@@ -17,7 +18,7 @@ export function buttonClick(e) {
 	) {
 		completeButton(index);
 	} else if (classList === "fa-regular fa-pen-to-square") {
-		editButton(index);
+		renderEditModal(index);
 	}
 }
 
@@ -90,9 +91,4 @@ function completeButton(index) {
 	toggleCompleted(index);
 	renderDom();
 	console.log("Complete button has been toggled for index " + index);
-}
-
-function editButton(index) {
-	console.log("User wants to edit item at index " + index);
-	// Modal
 }

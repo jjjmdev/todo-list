@@ -15,3 +15,26 @@
 article.message.is-completed {
 	opacity: 0.6;
 }
+
+.select,
+.select select {
+	width: 100%;
+}
+
+/* Rewriting properties of bulma-switch to move the switch to the next line */
+.switch[type="checkbox"] + label {
+	padding-left: 0;
+}
+
+.switch[type="checkbox"] + label::after {
+	top: 50px;
+	left: 4px;
+}
+
+.switch[type="checkbox"] + label::before {
+	top: 45px;
+}
+
+.switch[type="checkbox"]:checked + label::after {
+	left: 30px;
+}
