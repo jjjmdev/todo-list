@@ -15,11 +15,11 @@ class Projects {
 		return this.projects;
 	}
 
-	updateItem(item, index) {
+	updateItem(item) {
 		this.projects = [
-			...this.projects.slice(0, index),
+			...this.projects.slice(0, item.id),
 			item,
-			...this.projects.slice(index + 1, this.projects.length),
+			...this.projects.slice(item.id + 1, this.projects.length),
 		];
 
 		saveToLocal();
@@ -36,7 +36,6 @@ class Projects {
 
 	toggleCompleted(index) {
 		this.projects[index].completed = !this.projects[index].completed;
-		console.log(this.projects[index].completed);
 	}
 
 	listByProjectName(projectName) {
@@ -95,9 +94,19 @@ function deleteItemByIndex(index) {
 function toggleCompleted(index) {
 	projects.toggleCompleted(index);
 	saveToLocal();
+}
+
+function updateItem(item) {
+	projects.updateItem(item);
 	console.log(projects);
 }
 
 init();
 
-export { projects, itemByIndex, deleteItemByIndex, toggleCompleted };
+export {
+	projects,
+	itemByIndex,
+	deleteItemByIndex,
+	toggleCompleted,
+	updateItem,
+};

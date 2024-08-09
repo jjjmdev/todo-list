@@ -90,5 +90,4 @@ function renderDeleteModal(index) {
 function completeButton(index) {
 	toggleCompleted(index);
 	renderDom();
-	console.log("Complete button has been toggled for index " + index);
 }
