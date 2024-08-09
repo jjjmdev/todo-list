@@ -18,10 +18,16 @@ function createControl() {
 	return control;
 }
 
-function createInput(text, name, value, type, placeholder = "") {
+function createFieldLabelControl(text, name) {
 	const field = createElement("div", "field");
 	const label = createLabel(text, name);
 	const control = createControl();
+
+	return { field, label, control };
+}
+
+function createInput(text, name, value, type, placeholder = "") {
+	const { field, label, control } = createFieldLabelControl(text, name);
 
 	const textInput = document.createElement("input");
 	textInput.classList = "input";
@@ -37,9 +43,7 @@ function createInput(text, name, value, type, placeholder = "") {
 }
 
 function createSwitch(text, name, checked) {
-	const field = createElement("div", "field");
-	const label = createLabel(text, name);
-	const control = createControl();
+	const { field, label, control } = createFieldLabelControl(text, name);
 
 	const textInput = document.createElement("input");
 	textInput.classList = "switch";
@@ -64,9 +68,7 @@ function createElement(type, classList = "") {
 }
 
 function createSelect(selected, title, name, options) {
-	const field = createElement("div", "field");
-	const label = createLabel(title, name);
-	const control = createControl();
+	const { field, label, control } = createFieldLabelControl(title, name);
 	const selectContainer = createElement("div", "select");
 	const select = createElement("select");
 	select.setAttribute("id", name);
@@ -88,6 +90,20 @@ function createSelect(selected, title, name, options) {
 	selectContainer.append(select);
 	control.append(label, selectContainer);
 	field.append(control);
+	return field;
+}
+
+function createTextarea(text, name, value, placeholder) {
+	const { field, label, control } = createFieldLabelControl(text, name);
+	const textarea = createElement("textarea", "textarea");
+	textarea.setAttribute("placeholder", placeholder);
+	textarea.setAttribute("id", name);
+	textarea.setAttribute("name", name);
+	textarea.textContent = value;
+
+	control.append(label, textarea);
+	field.append(control);
+
 	return field;
 }
 
@@ -145,10 +161,17 @@ export function renderEditModal(index) {
 		completed
 	);
 
-	const formGrid = document.createElement("div");
-	formGrid.classList = "grid";
+	const formGrid = createElement("div", "grid");
 	formGrid.append(deadlineField, priorityField, completedField);
-	modalCardBody.append(projectNameField, taskField, formGrid);
+
+	const descriptionField = createTextarea(
+		"Description",
+		"description",
+		description,
+		"Please enter a description"
+	);
+
+	modalCardBody.append(projectNameField, taskField, formGrid, descriptionField);
 
 	const modalCardFooter = document.createElement("footer");
 	modalCardFooter.classList = "modal-card-foot";
